@@ -39,9 +39,35 @@
       <h1 class="m-3">SVT Robots</h1>
       <button class="btn btn-primary ms-3" id="load">Load Data</button>
       <section>
+        <form>
+          <div
+            class="input-group input-group-sm mb-3 border border-secondary border-opacity-50 w-25 ms-1"
+          >
+            <div class="input-group-prepend" id="inputGroup-sizing-sm">
+              <span class="input-group-text"
+                ><img
+                  src="./images/searchicon.svg"
+                  alt="search icon"
+                  height="25px"
+                />
+              </span>
+            </div>
+            <input
+              type="text"
+              id="search"
+              onkeyup="searchById()"
+              placeholder="search by id"
+              class="form-control"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+            />
+          </div>
+        </form>
+
         <div class="table-responsive-sm text-nowrap">
           <table
             class="table table-striped table-bordered table-sm text-center"
+            id="table"
           >
             <tr>
               <th class="th-sm p-2 align-middle fw-semibold" id="robot_id">
