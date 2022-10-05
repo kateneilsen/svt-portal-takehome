@@ -58,5 +58,3 @@ code .
 - make table heading sticky so it's easy to see the column headings as you sroll vertically to view all robot data
 
 - add tooltip to the table column headings so users know that they can click the heading to sort by column in ascending/descending order
-
-- Add event to click on each row to view individual robot in the warehouse. Perhaps a simple graph/map to display the robot's location in the particular warehouse.
