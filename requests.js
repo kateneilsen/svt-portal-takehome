@@ -23,7 +23,7 @@ function renderTable() {
   // create html
   let result = "";
   data.forEach((robot) => {
-    result += `<tr>
+    result += `<tr key=${robot.robotId}>
            <td>${robot.robotId}</td>
            <td>${robot.batteryLevel}</td>
            <td>${robot.y}</td>
