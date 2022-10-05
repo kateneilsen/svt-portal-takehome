@@ -9,3 +9,7 @@ section{
     font-family: 'Lato', sans-serif;
     margin: 10px;
 }
+
+.table-sortable th {
+    cursor: pointer;
+}

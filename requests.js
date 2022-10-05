@@ -1,46 +1,51 @@
-// get button element by id
-const loadData = document.getElementById("load");
+document.addEventListener("DOMContentLoaded", getRobotData, false);
 
-const tbody = document.getElementById("robots");
-const list = document.createDocumentFragment();
-
-// // event listener for button
-loadData.addEventListener("click", getRobotData);
-
-//load data on page
-window.onload = () => {
-  getRobotData();
-};
+let data, table, sortCol;
+let sortAsc = false;
 
 //function to get data and map data into table
-function getRobotData() {
-  fetch("https://60c8ed887dafc90017ffbd56.mockapi.io/robots")
-    .then((response) => response.json())
-    .then((data) => {
-      let robots = data;
+async function getRobotData() {
+  table = document.querySelector("#table tbody");
+  let response = await fetch(
+    "https://60c8ed887dafc90017ffbd56.mockapi.io/robots"
+  );
 
-      robots.map((robot) => {
-        let row = document.createElement("tr");
-        let id = document.createElement("td");
-        let battery = document.createElement("td");
-        let y = document.createElement("td");
-        let x = document.createElement("td");
+  data = await response.json();
+  renderTable();
 
-        id.innerHTML = `${robot.robotId}`;
-        battery.innerHTML = `${robot.batteryLevel}`;
-        y.innerHTML = `${robot.y}`;
-        x.innerHTML = `${robot.x}`;
+  //listen for sort clicks
+  document.querySelectorAll("#table thead tr th").forEach((t) => {
+    t.addEventListener("click", sort, false);
+  });
+}
 
-        row.appendChild(id);
-        row.appendChild(battery);
-        row.appendChild(y);
-        row.appendChild(x);
+function renderTable() {
+  // create html
+  let result = "";
+  data.forEach((robot) => {
+    result += `<tr>
+           <td>${robot.robotId}</td>
+           <td>${robot.batteryLevel}</td>
+           <td>${robot.y}</td>
+           <td>${robot.x}</td>
+           </tr>`;
+  });
+  table.innerHTML = result;
+}
+//sort
 
-        list.appendChild(row);
-      });
-    });
-
-  tbody.appendChild(list);
+function sort(e) {
+  let thisSort = e.target.dataset.sort;
+  if (sortCol === thisSort) sortAsc = !sortAsc;
+  sortCol = thisSort;
+  data.sort((a, b) => {
+    let aSortCol = parseFloat(a[sortCol]);
+    let bSortCol = parseFloat(b[sortCol]);
+    if (aSortCol < bSortCol) return sortAsc ? 1 : -1;
+    if (aSortCol > bSortCol) return sortAsc ? -1 : 1;
+    return 0;
+  });
+  renderTable();
 }
 
 //search by ID function
@@ -62,11 +67,3 @@ const searchById = () => {
     }
   }
 };
-
-// sort by id
-
-//sort by battery level
-
-//sort by y
-
-//sort by x
